@@ -4,8 +4,8 @@ definitions:
     properties:
       participante:
         type: string
-        description: Nombre del Pokémon
-        example: Pikachu
+        description: Nombre tuyo como participante de la competencia
+        example: Julián
       ganador:
         $ref: '#/definitions/Pokemon'
       perdedor:
@@ -15,30 +15,29 @@ definitions:
   get:
     tags:
       - 'Batalla'
-    summary: 'Get Batallas'
-    description: 'Get Batallas'
+    summary: 'Obtener batallas'
+    description: 'Obtener un listado con todas las batallas que han sido libradas y registrado su pokemon ganador y perdedor en el servidor.'
     produces:
       - 'application/json'
     responses:
       '200':
-        description: 'Successful operation'
+        description: 'Operación de consulta exitosa. Devuelve un arreglo con todas las batallas registadas en el servidor.'
         schema:
-          type: 'array'
-          items:
-            $ref: '#/definitions/Batalla'
-      '500':
-        description: 'SERVER ERROR'
-        schema:
-          type: 'object'
+          type: object
           properties:
             message:
-              type: 'string'
+              type: string
+              example: "Peticion Aceptada"
+            data:
+              type: 'array'
+              items:
+                $ref: '#/definitions/Batalla'
 
   post:
     tags:
       - 'Batalla'
-    summary: 'Create a Batallas'
-    description: 'Create a Batallas'
+    summary: 'Crear batalla'
+    description: 'Crea un registro de una batalla en el servidor. Para ello, se debe especificar al pokemon ganador, perdedor y el nombre del participante que realizó la simulación (tu nombre).'
     consumes:
       - application/json
     produces:
@@ -51,32 +50,45 @@ definitions:
           type: 'object'
           required:
             - 'participante'
-            - 'pokemon1'
-            - 'pokemon2'
+            - 'ganador'
+            - 'perdedor'
           properties:
             participante:
               type: string
               description: 'Nombre del participante'
               example: 'Julian'
-            pokemon1:
+            ganador:
               type: integer
-              description: 'Número del pokemon 1'
+              description: 'Número del Pokemon que resultó ganador'
               example: 3
-            pokemon2:
+            perdedor:
               type: integer
-              description: 'Número del pokemon 2'
+              description: 'Número del Pokemon que perdió la pelea'
               example: 5
     responses:
       '200':
-        description: 'Successful operation'
+        description: 'Operación de carga exitosa'
         schema:
-          type: 'array'
-          items:
-            $ref: '#/definitions/Batalla'
+          type: object
+          properties:
+            message:
+              type: string
+              example: Peticion de creacion procesada
+            data:
+              type: 'array'
+              items:
+                $ref: '#/definitions/Batalla'
       '500':
-        description: 'SERVER ERROR'
+        description: 'Error interno del servidor procesando la solicitud. Probablemente sucede porque la petición realizada fue incorrecta.'
         schema:
           type: 'object'
           properties:
+            status:
+              type: string
+              example: error
             message:
               type: 'string'
+              example: SERVER ERROR
+            error:
+              type: string
+              example: "ValidationError: ganador: Path `ganador` is required."

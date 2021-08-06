@@ -22,34 +22,20 @@ export const listBatallas = async (req, res) => {
 // /v1/batallas/
 export const registerBatalla = async (req, res) => {
   try {
-    const { pokemon1, pokemon2, participante } = req.body
-
-    const win = Math.floor(Math.random() * 2 + 1)
+    const { ganador, perdedor, participante } = req.body
 
     let batalla
     let data
 
-    if (win === 1) {
-      batalla = {
-        participante,
-        ganador: await findPokemonById(pokemon1),
-        perdedor: await findPokemonById(pokemon2)
-      }
-      data = await addBatalla(batalla)
-
-      await addVictoryPokemon(pokemon1)
-      await addLostPokemon(pokemon2)
-    } else {
-      batalla = {
-        participante,
-        ganador: await findPokemonById(pokemon2),
-        perdedor: await findPokemonById(pokemon1)
-      }
-      data = await addBatalla(batalla)
-
-      await addVictoryPokemon(pokemon2)
-      await addLostPokemon(pokemon1)
+    batalla = {
+      participante,
+      ganador: await findPokemonById(ganador),
+      perdedor: await findPokemonById(perdedor)
     }
+    data = await addBatalla(batalla)
+
+    await addVictoryPokemon(ganador)
+    await addLostPokemon(perdedor)
 
     handleResponse(res, 200, message.create_success, batallaResource(data))
   } catch (error) {

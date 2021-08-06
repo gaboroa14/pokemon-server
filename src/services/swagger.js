@@ -4,20 +4,15 @@ const swaggerOptions = {
   openapi: "3.0.0",
   swaggerDefinition: {
     info: {
-      title: "Documenting REST API's",
+      title: "I Competencia de Programación de GracoSoft",
       description:
-        "This is an implementation of how to document your RESTful API's using SWAGGER",
+        "Esta es la documentación de la API que utilizarás en la competencia de programación. En esta página encontrarás todo lo relacionado con los Endpoints que utilizaremos en el desarrollo del concurso, junto al modelo con el cual debes realizar estas solicitudes, y la forma en que las mismas serán respondidas por el servidor. Te invitamos a que eches un vistazo a esta página, juegues, estudies y analices cómo funciona esta API, ¡y que te pongas creativo programando!",
     },
     basePath: '/api',
     securityDefinitions: {
-      bearerAuth: {
-        type: 'apiKey',
-        name: 'Authorization',
-        scheme: 'bearer',
-        in: 'header',
-      },
+
     },
-    security: [ { bearerAuth: [] } ],
+    security: [ ],
   },
   apis: [
     './src/components/*/*.yml',

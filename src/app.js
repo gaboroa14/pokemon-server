@@ -21,6 +21,6 @@ app.use(express.urlencoded({ extended: false })) // imagenes que vengan desde fo
 app.use(express.json()) // tener objetos json
 app.use('/public', express.static(path.join(__dirname, '../public'))) // permitir acceso a public desde el navegador
 app.use('/api/v1', routes)
-app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
+app.use('/', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 
 export default app

@@ -5,7 +5,7 @@ definitions:
       numero:
         type: integer
         description: Número del Pokémon
-        example: 830
+        example: 77
       nombre:
         type: string
         description: Nombre del Pokémon
@@ -21,75 +21,87 @@ definitions:
         properties:
           hp:
             type: number
-            description: HP del Pokémon
-            example: 830
+            description: HP (Puntos de salud) del Pokémon
+            example: 91
           ataque:
             type: number
-            description: Ataque del Pokémon
-            example: 830
+            description: Puntuación de ataque del Pokémon
+            example: 83
           defensa:
             type: number
-            description: Defensa del Pokémon
-            example: 830
+            description: Puntuación de defensa del Pokémon
+            example: 71
           velocidad:
             type: number
             description: Velocidad del Pokémon
-            example: 830
+            example: 65
       cantidadVictorias:
         type: integer
-        description: Cantidad de victorias del Pokémon
-        example: 2
+        description: Cantidad de victorias que ha tenido el pokemon
+        example: 21
       cantidadDerrotas:
         type: integer
-        description: Cantidad de derrotas del Pokémon
-        example: 0
+        description: Cantidad de derrotas que ha sufrido el pokemon
+        example: 7
 
 /v1/pokemons/:
   get:
     tags:
       - 'Pokemon'
-    summary: 'Get Pokemons'
-    description: 'Get Pokemons'
+    summary: 'Obtener Pokemones'
+    description: 'Obtiene una lista con todos los pokemones registrados en el servidor.'
     produces:
       - 'application/json'
     responses:
       '200':
-        description: 'Successful operation'
+        description: 'Operación de consulta exitosa. Devuelve un arreglo con todos los pokemones registados en el servidor.'
         schema:
-          type: 'array'
-          items:
-            $ref: '#/definitions/Pokemon'
-      '500':
-        description: 'SERVER ERROR'
-        schema:
-          type: 'object'
+          type: object
           properties:
             message:
-              type: 'string'
+              type: string
+              example: "Peticion Aceptada"
+            data:
+              type: 'array'
+              items:
+                $ref: '#/definitions/Pokemon'
 
 /v1/pokemons/{id}:
   get:
     tags:
       - 'Pokemon'
-    summary: 'Get a Pokemon'
-    description: 'Get a Pokemon'
+    summary: 'Consultar pokemon'
+    description: 'Consulta los datos individuales de un solo pokemon a la vez. Recibe como parámetro en la URL el número del pokemon - ejemplo, /pokemons/1 devolverá los datos de Bulbasur.'
     produces:
       - 'application/json'
     parameters:
       - in: path
         name: id
         type: integer
-        description: 'Number pokemon'
+        description: 'Número del pokemon a consultar.'
         example: 1
     responses:
       '200':
-        description: 'Successful operation'
+        description: 'Operación de consulta exitosa; devuelve el objeto con el pokemon y sus datos.'
         schema:
-          $ref: '#/definitions/Pokemon'
+          type: object
+          properties:
+            message:
+              type: string
+              example: Peticion Aceptada
+            data:
+              $ref: '#/definitions/Pokemon'
       '500':
-        description: 'SERVER ERROR'
+        description: 'Error interno del servidor procesando la solicitud. Probablemente sucede porque la petición realizada fue incorrecta.'
         schema:
           type: 'object'
           properties:
+            status:
+              type: string
+              example: error
             message:
               type: 'string'
+              example: SERVER ERROR
+            error:
+              type: string
+              example: "TypeError: Cannot read property 'numero' of null"
