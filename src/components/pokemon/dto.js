@@ -3,7 +3,7 @@ export const pokemonResource = (resource) => ({
   nombre: resource.nombre,
   tipos: resource.tipos,
   estadisticas: resource.estadisticas,
-  urlSprite: resource.urlSprite,
+  urlSprite: resource.urlSprite.replace('/back',''),
   cantidadVictorias: resource.cantidadVictorias,
   cantidadDerrotas: resource.cantidadDerrotas
 })
