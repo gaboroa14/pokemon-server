@@ -12,7 +12,7 @@ const getSequenceNextValue = async (seqName) => {
 
 export const findPokemons = async () => {
   try {
-    return await PokemonModel.find()
+    return await PokemonModel.find().limit(150)
   } catch (error) {
     throw error
   }
