@@ -33,7 +33,7 @@ export const registerPokemon = async (data) => {
       numero: id,
       nombre: name,
       tipos: Array.from(types, (type) => type.type.name),
-      urlSprite: sprites.back_default,
+      urlSprite: sprites.front_default,
       estadisticas: {
         hp: stats[0].base_stat,
         ataque: stats[1].base_stat,
