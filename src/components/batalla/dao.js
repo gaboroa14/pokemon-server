@@ -7,7 +7,6 @@ export const findLast5Batalla = async () => {
       .populate('perdedor')
       .lean()
       .sort({_id : -1})
-      .limit(5)
   } catch (error) {
     throw error
   }
